@@ -86,4 +86,28 @@ class BowlingTest extends TestCase
 
         $this->assertSame(300, $game->score());
     }
+
+    #[Test]
+    public function spareScoreCalculation(): void
+    {
+        $game = $this->game;
+        $game = self::rollSpare($game);
+        $game->roll(5); // Spare bonus
+        $game = self::rollMany($game, 17, 0);
+
+        $this->assertSame(20, $game->score());
+    }
+
+    #[Test]
+    public function spareFrameIndexUpdate(): void
+    {
+        $game = $this->game;
+        $game = self::rollSpare($game);
+        $game->roll(5); // Spare bonus
+        $game = self::rollSpare($game);
+        $game->roll(3); // Second spare bonus
+        $game = self::rollMany($game, 15, 0);
+
+        $this->assertSame(38, $game->score());
+    }
 }
