@@ -30,4 +30,14 @@ class BowlingTest extends TestCase
 
         $this->assertSame(0, $this->game->score());
     }
+
+    #[Test]
+    public function allOnes(): void
+    {
+        for ($i = 0; $i < 20; ++$i) {
+            $this->game->roll(1);
+        }
+
+        $this->assertSame(20, $this->game->score());
+    }
 }
