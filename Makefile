@@ -10,4 +10,4 @@ test:
 	vendor/bin/phpunit --colors test
 
 mutation:
-	vendor/bin/infection --test-framework=phpunit
+	vendor/bin/infection --test-framework=phpunit --show-mutations
