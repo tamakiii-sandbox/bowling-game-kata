@@ -23,6 +23,11 @@ class BowlingTest extends TestCase
         return $game;
     }
 
+    private static function rollSpare(Game $game): Game
+    {
+        return self::rollMany($game, 2, 5);
+    }
+
     #[Test]
     #[DoesNotPerformAssertions]
     public function canRoll(): void
@@ -50,7 +55,7 @@ class BowlingTest extends TestCase
     public function oneSpare(): void
     {
         $game = $this->game;
-        $game = self::rollMany($game, 2, 5); // spare
+        $game = self::rollSpare($game);
         $game->roll(7);
         $game = self::rollMany($game, 17, 0);
 
