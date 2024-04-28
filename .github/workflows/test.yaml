@@ -10,17 +10,23 @@ jobs:
             coverage: xdebug
             tools: composer:v2
 
-        - name: Get composer cache directory
-          id: composer-cache
+        - id: composer-cache
           run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-        - name: Cache dependencies
-          uses: actions/cache@v4
+        - uses: actions/cache@v4
           with:
             path: ${{ steps.composer-cache.outputs.dir }}
             key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-            restore-keys: ${{ runner.os }}-composer-
+
+        - id: infection-cache
+          run: mkdir ~/.infection && echo "dir=~/.infection" >> $GITHUB_OUTPUT
+
+        - uses: actions/cache@v4
+          with:
+            path: ${{ steps.infection-cache.outputs.dir }}
+            key: ${{ runner.os }}-infection-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ runner.os }}-infection-
 
         - run: composer install --prefer-dist
         - run: make test
-        - run: make mutation
+        - run: vendor/bin/infection --test-framework=phpunit --show-mutations --cache-directory=${{ steps.infection-cache.outputs.dir }}
