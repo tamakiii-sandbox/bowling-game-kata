@@ -12,4 +12,4 @@ clean:
 	docker image rm $(IMAGE)
 
 bash:
-	docker run -it --rm -v $(PWD):/opt/bowling-game-kata $(IMAGE) $@
+	docker run -it --rm -v $(PWD):/opt/bowling-game-kata -w /opt/bowling-game-kata $(IMAGE) $@
