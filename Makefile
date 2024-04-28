@@ -4,4 +4,4 @@ help:
 	@cat $(firstword $(MAKEFILE_LIST))
 
 test:
-	vendor/bin/phpunit test
+	vendor/bin/phpunit --colors test
