@@ -1,0 +1,10 @@
+{
+    "name": "tamakiii-sandbox/bowling-game-kata",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "TamakiiiSandbox\\BowlingGameKata\\": "src/"
+        }
+    },
+    "require": {}
+}
