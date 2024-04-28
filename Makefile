@@ -10,4 +10,4 @@ test:
 	vendor/bin/phpunit --colors test
 
 mutation:
-	vendor/bin/infection --test-framework=phpunit --show-mutations
+	vendor/bin/infection --test-framework=phpunit --show-mutations --min-msi=100
