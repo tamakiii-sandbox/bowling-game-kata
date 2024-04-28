@@ -6,7 +6,7 @@ help:
 	@cat $(firstword $(MAKEFILE_LIST))
 
 build:
-	docker build -t $(IMAGE) .
+	docker build -t $(IMAGE) --target development .
 
 clean:
 	docker image rm $(IMAGE)
