@@ -28,6 +28,11 @@ class BowlingTest extends TestCase
         return self::rollMany($game, 2, 5);
     }
 
+    private static function rollStrike(Game $game): Game
+    {
+        return self::rollMany($game, 1, 10);
+    }
+
     #[Test]
     #[DoesNotPerformAssertions]
     public function canRoll(): void
@@ -65,9 +70,10 @@ class BowlingTest extends TestCase
     #[Test]
     public function oneStrike(): void
     {
-        $this->game->roll(10); // strike
-        $this->game->roll(2);
-        $this->game->roll(3);
+        $game = $this->game;
+        $game = self::rollStrike($game);
+        $game->roll(2);
+        $game->roll(3);
         $game = self::rollMany($this->game, 16, 0);
 
         $this->assertSame(20, $game->score());
