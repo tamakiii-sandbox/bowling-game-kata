@@ -14,6 +14,15 @@ class BowlingTest extends TestCase
         $this->game = new Game;
     }
 
+    private static function rollMany(Game $game, int $n, int $pins): Game
+    {
+        for ($i = 0; $i < $n; ++$i) {
+            $game->roll($pins);
+        }
+
+        return $game;
+    }
+
     #[Test]
     #[DoesNotPerformAssertions]
     public function canRoll(): void
@@ -24,20 +33,16 @@ class BowlingTest extends TestCase
     #[Test]
     public function gutterGame(): void
     {
-        for ($i = 0; $i < 20; ++$i) {
-            $this->game->roll(0);
-        }
+        $game = self::rollMany($this->game, 20, 0);
 
-        $this->assertSame(0, $this->game->score());
+        $this->assertSame(0, $game->score());
     }
 
     #[Test]
     public function allOnes(): void
     {
-        for ($i = 0; $i < 20; ++$i) {
-            $this->game->roll(1);
-        }
+        $game = self::rollMany($this->game, 20, 1);
 
-        $this->assertSame(20, $this->game->score());
+        $this->assertSame(20, $game->score());
     }
 }
