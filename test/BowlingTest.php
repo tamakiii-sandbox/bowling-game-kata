@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use TamakiiiSandbox\BowlingGameKata\Game;
 
 class BowlingTest extends TestCase
@@ -14,8 +15,19 @@ class BowlingTest extends TestCase
     }
 
     #[Test]
-    public function notthing(): void
+    #[DoesNotPerformAssertions]
+    public function canRoll(): void
     {
-        $this->assertSame('TamakiiiSandbox\BowlingGameKata\Game', get_class($this->game));
+        $this->game->roll(0);
+    }
+
+    #[Test]
+    public function gutterGame(): void
+    {
+        for ($i = 0; $i < 20; ++$i) {
+            $this->game->roll(0);
+        }
+
+        $this->assertSame(0, $this->game->score());
     }
 }
