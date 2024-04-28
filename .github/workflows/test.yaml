@@ -18,15 +18,6 @@ jobs:
             path: ${{ steps.composer-cache.outputs.dir }}
             key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
-        - id: infection-cache
-          run: mkdir ~/.infection && echo "dir=~/.infection" >> $GITHUB_OUTPUT
-
-        - uses: actions/cache@v4
-          with:
-            path: ${{ steps.infection-cache.outputs.dir }}
-            key: ${{ runner.os }}-infection-${{ hashFiles('**/composer.lock') }}
-            restore-keys: ${{ runner.os }}-infection-
-
         - run: composer install --prefer-dist
-        - run: make test
-        - run: vendor/bin/infection --test-framework=phpunit --show-mutations --cache-directory=${{ steps.infection-cache.outputs.dir }}
+        - run: vendor/bin/phpunit --colors test
+        - run: vendor/bin/infection --test-framework=phpunit --show-mutations --min-msi=100 --threads=$(nproc)
