@@ -45,4 +45,15 @@ class BowlingTest extends TestCase
 
         $this->assertSame(20, $game->score());
     }
+
+    #[Test]
+    public function oneSpare(): void
+    {
+        $game = $this->game;
+        $game = self::rollMany($game, 2, 5); // spare
+        $game->roll(7);
+        $game = self::rollMany($game, 17, 0);
+
+        $this->assertSame(24, $game->score());
+    }
 }
