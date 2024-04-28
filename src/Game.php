@@ -17,7 +17,10 @@ class Game
         $score = 0;
         $frameIndex = 0;
         for ($frame = 0; $frame < 10; ++$frame) {
-            if ($this->isSpare($frameIndex)) {
+            if ($this->rolls[$frameIndex] == 10) {
+                $score += 10 + $this->rolls[$frameIndex+1] + $this->rolls[$frameIndex+2];
+                $frameIndex++;
+            } elseif ($this->isSpare($frameIndex)) {
                 $score += 10 + $this->rolls[$frameIndex + 2];
                 $frameIndex += 2;
             } else {
